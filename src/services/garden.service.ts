@@ -8,38 +8,53 @@ class GardenService implements IGardenService {
 
   async getGarden(): Promise<Garden> {
     const response = await fetch(`${this.apiBase}/garden`);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
     return response.json();
   }
 
   async getPlants(): Promise<Plant[]> {
     const response = await fetch(`${this.apiBase}/plants`);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
     return response.json();
   }
 
   async updateGarden(dto: UpdateGardenRequestDTO): Promise<void> {
-    await fetch(`${this.apiBase}/garden`, {
+    const response = await fetch(`${this.apiBase}/garden`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dto),
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
   }
 
   async updateField(idx: number, dto: UpdateFieldRequestDTO): Promise<void> {
-    await fetch(`${this.apiBase}/garden/field/${idx}`, {
+    const response = await fetch(`${this.apiBase}/garden/field/${idx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dto),
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
   }
 
   async clearField(idx: number): Promise<void> {
-    await fetch(`${this.apiBase}/garden/field/${idx}`, {
+    const response = await fetch(`${this.apiBase}/garden/field/${idx}`, {
       method: 'DELETE',
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
   }
 
   async createPlant(dto: CreatePlantRequestDTO): Promise<Plant> {
@@ -50,20 +65,25 @@ class GardenService implements IGardenService {
       },
       body: JSON.stringify(dto),
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
     return response.json();
   }
 
   async updatePlant(id: string, dto: UpdatePlantRequestDTO): Promise<void> {
-    await fetch(`${this.apiBase}/plants/${id}`, {
+    const response = await fetch(`${this.apiBase}/plants/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dto),
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
   }
 }
-
 
 export class GardenServiceFactory {
   static create(apiBase: string, mock = false): IGardenService {
