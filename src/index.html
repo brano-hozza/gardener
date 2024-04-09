@@ -4,12 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Stencil Component Starter</title>
-    <link rel="stylesheet" href="build/gardener.css" />
+    <link rel="stylesheet" href="/build/gardener.css" />
 
     <script type="module" src="/build/gardener.esm.js"></script>
     <script nomodule src="/build/gardener.js"></script>
   </head>
   <body>
-    <gardener-app mock></gardener-app>
+    <span>
+      <label for="mock">Mock service</label>
+      <input id="mock" onchange="toggleMock(event)" type="checkbox">
+    </span>
+    <gardener-app id="app" mock></gardener-app>
+    <script>
+      const app = document.getElementById('app');
+      const mockCheckbox = document.getElementById('mock');
+
+
+      function toggleMock(event) {
+        const getMock = event.target.checked;
+        console.log(getMock)
+        localStorage.setItem('mock', getMock);
+        app.setAttribute('mock', getMock);
+      }
+
+      const mock = localStorage.getItem('mock');
+      if (mock) {
+        app.setAttribute('mock', mock);
+      }
+      mockCheckbox.addEventListener('change', toggleMock);
+      mockCheckbox.checked = mock === 'true';
+    </script>
   </body>
 </html>
