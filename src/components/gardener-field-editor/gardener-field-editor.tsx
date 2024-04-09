@@ -57,7 +57,7 @@ export class GardenerFieldEditor {
           ))}
         </select>
         <textarea class="w-1/2 p-2 rounded-md" placeholder="Note" value={this.note} onInput={e => (this.note = (e.target as HTMLTextAreaElement).value)}></textarea>
-        <button class={'w-1/2 p-2 rounded-md  text-white ' + this.isSaveDisabled() ? 'bg-gray-200 cursor-not-allowed' : 'bg-green-500'} onClick={() => this.saveField()}>
+        <button class={'w-1/2 p-2 rounded-md  text-white ' + (this.isSaveDisabled() ? 'bg-gray-200 cursor-not-allowed' : 'bg-green-500')} onClick={() => this.saveField()}>
           Save
         </button>
         {this.field?.plant && (

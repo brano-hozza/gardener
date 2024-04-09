@@ -11,6 +11,9 @@ export namespace Components {
     interface GardenerApp {
         "mock": boolean;
     }
+    interface GardenerError {
+        "error": string;
+    }
     interface GardenerField {
         "field": GardenField | null;
         "plants": Plant[];
@@ -51,6 +54,12 @@ declare global {
     var HTMLGardenerAppElement: {
         prototype: HTMLGardenerAppElement;
         new (): HTMLGardenerAppElement;
+    };
+    interface HTMLGardenerErrorElement extends Components.GardenerError, HTMLStencilElement {
+    }
+    var HTMLGardenerErrorElement: {
+        prototype: HTMLGardenerErrorElement;
+        new (): HTMLGardenerErrorElement;
     };
     interface HTMLGardenerFieldElementEventMap {
         "selectField": any;
@@ -124,6 +133,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "gardener-app": HTMLGardenerAppElement;
+        "gardener-error": HTMLGardenerErrorElement;
         "gardener-field": HTMLGardenerFieldElement;
         "gardener-field-editor": HTMLGardenerFieldEditorElement;
         "gardener-garden": HTMLGardenerGardenElement;
@@ -133,6 +143,9 @@ declare global {
 declare namespace LocalJSX {
     interface GardenerApp {
         "mock"?: boolean;
+    }
+    interface GardenerError {
+        "error"?: string;
     }
     interface GardenerField {
         "field"?: GardenField | null;
@@ -159,6 +172,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "gardener-app": GardenerApp;
+        "gardener-error": GardenerError;
         "gardener-field": GardenerField;
         "gardener-field-editor": GardenerFieldEditor;
         "gardener-garden": GardenerGarden;
@@ -170,6 +184,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "gardener-app": LocalJSX.GardenerApp & JSXBase.HTMLAttributes<HTMLGardenerAppElement>;
+            "gardener-error": LocalJSX.GardenerError & JSXBase.HTMLAttributes<HTMLGardenerErrorElement>;
             "gardener-field": LocalJSX.GardenerField & JSXBase.HTMLAttributes<HTMLGardenerFieldElement>;
             "gardener-field-editor": LocalJSX.GardenerFieldEditor & JSXBase.HTMLAttributes<HTMLGardenerFieldEditorElement>;
             "gardener-garden": LocalJSX.GardenerGarden & JSXBase.HTMLAttributes<HTMLGardenerGardenElement>;

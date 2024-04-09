@@ -10,9 +10,10 @@ import { Garden, GardenField, Plant } from '../../types';
 export class GardenerApp {
   @Prop() mock: boolean = false;
 
-  @State() garden: Garden;
+  @State() garden: Garden | null = null;
   @State() plants: Plant[] = [];
   @State() selectedField: number = -1;
+  @State() error: string;
 
   private gardenService = GardenServiceFactory.create('http://localhost:3000', this.mock);
 
@@ -22,18 +23,33 @@ export class GardenerApp {
   }
 
   async componentWillLoad() {
-    this.garden = await this.gardenService.getGarden();
-    this.plants = await this.gardenService.getPlants();
+    try {
+      this.garden = await this.gardenService.getGarden();
+      this.plants = await this.gardenService.getPlants();
+    } catch (e) {
+      this.error = `Failed to load garden: ${e.message}`
+      console.error(e);
+    }
   }
 
   async reloadGarden() {
-    this.garden = await this.gardenService.getGarden();
-    forceUpdate(this);
+    try {
+      this.garden = await this.gardenService.getGarden();
+      forceUpdate(this);
+    } catch (e) {
+      this.error = `Failed to reload garden: ${e.message}`
+      console.error(e);
+    }
   }
 
   async reloadPlants() {
-    this.plants = await this.gardenService.getPlants();
-    forceUpdate(this);
+    try {
+      this.plants = await this.gardenService.getPlants();
+      forceUpdate(this);
+    } catch (e) {
+      this.error = `Failed to reload plants: ${e.message}`
+      console.error(e);
+    }
   }
 
   selectField(ev: CustomEvent<number>) {
@@ -42,69 +58,85 @@ export class GardenerApp {
   }
 
   getField(id: number): GardenField | null {
-    console.log(this.garden.fields, id);
-    const field = this.garden.fields[id] ?? null;
-    return field;
+    return this.garden.fields[id] ?? null;
   }
 
   async savePlant(plant: Plant) {
-    if (plant.id === '@new') {
-      await this.gardenService.createPlant({
-        name: plant.name,
-        description: plant.description,
-      });
-    } else {
-      await this.gardenService.updatePlant(plant.id, {
-        name: plant.name,
-        description: plant.description,
-      });
+    try {
+      if (plant.id === '@new') {
+        await this.gardenService.createPlant({
+          name: plant.name,
+          description: plant.description,
+        });
+      } else {
+        await this.gardenService.updatePlant(plant.id, {
+          name: plant.name,
+          description: plant.description,
+        });
+      }
+      await this.reloadPlants();
+    } catch (e) {
+      this.error = `Failed to save plant: ${e.message}`
+      console.error(e);
     }
-    await this.reloadPlants();
   }
 
   async saveField(field: GardenField) {
     if (this.selectedField === -1) return;
-    await this.gardenService.updateField(this.selectedField, {
-      plant: field.plant,
-      note: field.note,
-    });
-    this.selectedField = -1;
-    await this.reloadGarden();
+    try {
+      await this.gardenService.updateField(this.selectedField, {
+        plant: field.plant,
+        note: field.note,
+      });
+      this.selectedField = -1;
+      await this.reloadGarden();
+    } catch (e) {
+      this.error = `Failed to save field: ${e.message}`
+      console.error(e);
+    }
   }
 
   async clearField() {
     if (this.selectedField === -1) return;
-    await this.gardenService.clearField(this.selectedField);
-    this.selectedField = -1;
-    await this.reloadGarden();
+    try {
+      await this.gardenService.clearField(this.selectedField);
+      this.selectedField = -1;
+      await this.reloadGarden();
+    } catch (e) {
+      this.error = `Failed to clear field: ${e.message}`
+      console.error(e);
+    }
   }
 
   render() {
     return (
       <StyledHost>
-        <div class="w-full h-screen bg-green-100 p-4 flex flex-col items-center gap-2">
-          <h1 class="text-4xl">🌷Gardener v0.1🌼</h1>
-          <h2 class="text-xl">{this.garden.name}</h2>
-          <gardener-garden
-            class="w-full"
-            plants={this.plants}
-            onSelectField={e => this.selectField(e)}
-            onReload={() => this.reloadGarden()}
-            fields={this.garden.fields}
-            size={this.garden.size}
-          ></gardener-garden>
-          <gardener-plant-editor class="w-full" plants={this.plants} onSave={ev => this.savePlant(ev.detail)}></gardener-plant-editor>
-          {this.selectedField !== -1 && (
-            <gardener-field-editor
-              fieldId={this.selectedField}
-              onClearField={() => this.clearField()}
-              onSave={e => this.saveField(e.detail)}
+        {this.error && <gardener-error class="w-full h-screen" error={this.error}></gardener-error>}
+        {this.garden && (
+          <div class="w-full h-screen bg-green-100 p-4 flex flex-col items-center gap-2">
+            <h1 class="text-4xl">🌷Gardener v0.1🌼</h1>
+            <h2 class="text-xl">{this.garden.name}</h2>
+            <gardener-garden
               class="w-full"
               plants={this.plants}
-              garden={this.garden}
-            ></gardener-field-editor>
-          )}
-        </div>
+              onSelectField={e => this.selectField(e)}
+              onReload={() => this.reloadGarden()}
+              fields={this.garden.fields}
+              size={this.garden.size}
+            ></gardener-garden>
+            <gardener-plant-editor class="w-full" plants={this.plants} onSave={ev => this.savePlant(ev.detail)}></gardener-plant-editor>
+            {this.selectedField !== -1 && (
+              <gardener-field-editor
+                fieldId={this.selectedField}
+                onClearField={() => this.clearField()}
+                onSave={e => this.saveField(e.detail)}
+                class="w-full"
+                plants={this.plants}
+                garden={this.garden}
+              ></gardener-field-editor>
+            )}
+          </div>
+        )}
       </StyledHost>
     );
   }
