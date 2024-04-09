@@ -5,57 +5,175 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Garden, GardenField, Plant } from "./types";
+export { Garden, GardenField, Plant } from "./types";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface GardenerApp {
+        "mock": boolean;
+    }
+    interface GardenerField {
+        "field": GardenField | null;
+        "plants": Plant[];
+    }
+    interface GardenerFieldEditor {
+        "fieldId": number;
+        "garden": Garden;
+        "plants": Plant[];
+    }
+    interface GardenerGarden {
+        "fields": GardenField[];
+        "plants": Plant[];
+        "size": number;
+    }
+    interface GardenerPlantEditor {
+        "plants": Plant[];
     }
 }
+export interface GardenerFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGardenerFieldElement;
+}
+export interface GardenerFieldEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGardenerFieldEditorElement;
+}
+export interface GardenerGardenCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGardenerGardenElement;
+}
+export interface GardenerPlantEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGardenerPlantEditorElement;
+}
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLGardenerAppElement extends Components.GardenerApp, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLGardenerAppElement: {
+        prototype: HTMLGardenerAppElement;
+        new (): HTMLGardenerAppElement;
+    };
+    interface HTMLGardenerFieldElementEventMap {
+        "selectField": any;
+    }
+    interface HTMLGardenerFieldElement extends Components.GardenerField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGardenerFieldElementEventMap>(type: K, listener: (this: HTMLGardenerFieldElement, ev: GardenerFieldCustomEvent<HTMLGardenerFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGardenerFieldElementEventMap>(type: K, listener: (this: HTMLGardenerFieldElement, ev: GardenerFieldCustomEvent<HTMLGardenerFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGardenerFieldElement: {
+        prototype: HTMLGardenerFieldElement;
+        new (): HTMLGardenerFieldElement;
+    };
+    interface HTMLGardenerFieldEditorElementEventMap {
+        "save": GardenField;
+        "clearField": any;
+    }
+    interface HTMLGardenerFieldEditorElement extends Components.GardenerFieldEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGardenerFieldEditorElementEventMap>(type: K, listener: (this: HTMLGardenerFieldEditorElement, ev: GardenerFieldEditorCustomEvent<HTMLGardenerFieldEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGardenerFieldEditorElementEventMap>(type: K, listener: (this: HTMLGardenerFieldEditorElement, ev: GardenerFieldEditorCustomEvent<HTMLGardenerFieldEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGardenerFieldEditorElement: {
+        prototype: HTMLGardenerFieldEditorElement;
+        new (): HTMLGardenerFieldEditorElement;
+    };
+    interface HTMLGardenerGardenElementEventMap {
+        "reload": any;
+        "selectField": number;
+    }
+    interface HTMLGardenerGardenElement extends Components.GardenerGarden, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGardenerGardenElementEventMap>(type: K, listener: (this: HTMLGardenerGardenElement, ev: GardenerGardenCustomEvent<HTMLGardenerGardenElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGardenerGardenElementEventMap>(type: K, listener: (this: HTMLGardenerGardenElement, ev: GardenerGardenCustomEvent<HTMLGardenerGardenElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGardenerGardenElement: {
+        prototype: HTMLGardenerGardenElement;
+        new (): HTMLGardenerGardenElement;
+    };
+    interface HTMLGardenerPlantEditorElementEventMap {
+        "save": Plant;
+    }
+    interface HTMLGardenerPlantEditorElement extends Components.GardenerPlantEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGardenerPlantEditorElementEventMap>(type: K, listener: (this: HTMLGardenerPlantEditorElement, ev: GardenerPlantEditorCustomEvent<HTMLGardenerPlantEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGardenerPlantEditorElementEventMap>(type: K, listener: (this: HTMLGardenerPlantEditorElement, ev: GardenerPlantEditorCustomEvent<HTMLGardenerPlantEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGardenerPlantEditorElement: {
+        prototype: HTMLGardenerPlantEditorElement;
+        new (): HTMLGardenerPlantEditorElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "gardener-app": HTMLGardenerAppElement;
+        "gardener-field": HTMLGardenerFieldElement;
+        "gardener-field-editor": HTMLGardenerFieldEditorElement;
+        "gardener-garden": HTMLGardenerGardenElement;
+        "gardener-plant-editor": HTMLGardenerPlantEditorElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface GardenerApp {
+        "mock"?: boolean;
+    }
+    interface GardenerField {
+        "field"?: GardenField | null;
+        "onSelectField"?: (event: GardenerFieldCustomEvent<any>) => void;
+        "plants"?: Plant[];
+    }
+    interface GardenerFieldEditor {
+        "fieldId"?: number;
+        "garden"?: Garden;
+        "onClearField"?: (event: GardenerFieldEditorCustomEvent<any>) => void;
+        "onSave"?: (event: GardenerFieldEditorCustomEvent<GardenField>) => void;
+        "plants"?: Plant[];
+    }
+    interface GardenerGarden {
+        "fields"?: GardenField[];
+        "onReload"?: (event: GardenerGardenCustomEvent<any>) => void;
+        "onSelectField"?: (event: GardenerGardenCustomEvent<number>) => void;
+        "plants"?: Plant[];
+        "size"?: number;
+    }
+    interface GardenerPlantEditor {
+        "onSave"?: (event: GardenerPlantEditorCustomEvent<Plant>) => void;
+        "plants"?: Plant[];
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "gardener-app": GardenerApp;
+        "gardener-field": GardenerField;
+        "gardener-field-editor": GardenerFieldEditor;
+        "gardener-garden": GardenerGarden;
+        "gardener-plant-editor": GardenerPlantEditor;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "gardener-app": LocalJSX.GardenerApp & JSXBase.HTMLAttributes<HTMLGardenerAppElement>;
+            "gardener-field": LocalJSX.GardenerField & JSXBase.HTMLAttributes<HTMLGardenerFieldElement>;
+            "gardener-field-editor": LocalJSX.GardenerFieldEditor & JSXBase.HTMLAttributes<HTMLGardenerFieldEditorElement>;
+            "gardener-garden": LocalJSX.GardenerGarden & JSXBase.HTMLAttributes<HTMLGardenerGardenElement>;
+            "gardener-plant-editor": LocalJSX.GardenerPlantEditor & JSXBase.HTMLAttributes<HTMLGardenerPlantEditorElement>;
         }
     }
 }
