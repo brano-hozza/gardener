@@ -6,7 +6,7 @@ export interface Plant {
 }
 
 export interface GardenField {
-  plant: string; // plant id
+  plant: string;
   note?: string;
 }
 

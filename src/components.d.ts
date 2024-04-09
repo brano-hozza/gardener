@@ -9,26 +9,59 @@ import { Garden, GardenField, Plant } from "./types";
 export { Garden, GardenField, Plant } from "./types";
 export namespace Components {
     interface GardenerApp {
+        /**
+          * Whether to use the mock service
+         */
         "mock": boolean;
     }
     interface GardenerError {
+        /**
+          * The error message to display
+         */
         "error": string;
     }
     interface GardenerField {
+        /**
+          * The field to display
+         */
         "field": GardenField | null;
+        /**
+          * The list of plants
+         */
         "plants": Plant[];
     }
     interface GardenerFieldEditor {
+        /**
+          * The field id
+         */
         "fieldId": number;
+        /**
+          * The garden
+         */
         "garden": Garden;
+        /**
+          * The list of plants
+         */
         "plants": Plant[];
     }
     interface GardenerGarden {
+        /**
+          * The garden fields
+         */
         "fields": GardenField[];
+        /**
+          * The list of plants
+         */
         "plants": Plant[];
+        /**
+          * The garden size
+         */
         "size": number;
     }
     interface GardenerPlantEditor {
+        /**
+          * The list of plants
+         */
         "plants": Plant[];
     }
 }
@@ -142,32 +175,83 @@ declare global {
 }
 declare namespace LocalJSX {
     interface GardenerApp {
+        /**
+          * Whether to use the mock service
+         */
         "mock"?: boolean;
     }
     interface GardenerError {
+        /**
+          * The error message to display
+         */
         "error"?: string;
     }
     interface GardenerField {
+        /**
+          * The field to display
+         */
         "field"?: GardenField | null;
+        /**
+          * Event emitted when the field is selected
+         */
         "onSelectField"?: (event: GardenerFieldCustomEvent<any>) => void;
+        /**
+          * The list of plants
+         */
         "plants"?: Plant[];
     }
     interface GardenerFieldEditor {
+        /**
+          * The field id
+         */
         "fieldId"?: number;
+        /**
+          * The garden
+         */
         "garden"?: Garden;
+        /**
+          * Event emitted when the field is cleared
+         */
         "onClearField"?: (event: GardenerFieldEditorCustomEvent<any>) => void;
+        /**
+          * Event emitted when the field is saved
+         */
         "onSave"?: (event: GardenerFieldEditorCustomEvent<GardenField>) => void;
+        /**
+          * The list of plants
+         */
         "plants"?: Plant[];
     }
     interface GardenerGarden {
+        /**
+          * The garden fields
+         */
         "fields"?: GardenField[];
+        /**
+          * Event emitted when the garden is reloaded
+         */
         "onReload"?: (event: GardenerGardenCustomEvent<any>) => void;
+        /**
+          * Event emitted when a field is selected
+         */
         "onSelectField"?: (event: GardenerGardenCustomEvent<number>) => void;
+        /**
+          * The list of plants
+         */
         "plants"?: Plant[];
+        /**
+          * The garden size
+         */
         "size"?: number;
     }
     interface GardenerPlantEditor {
+        /**
+          * Event emitted when the plant is saved
+         */
         "onSave"?: (event: GardenerPlantEditorCustomEvent<Plant>) => void;
+        /**
+          * The list of plants
+         */
         "plants"?: Plant[];
     }
     interface IntrinsicElements {

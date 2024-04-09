@@ -8,6 +8,9 @@ import { Garden, GardenField, Plant } from '../../types';
   shadow: true,
 })
 export class GardenerApp {
+  /**
+   * Whether to use the mock service
+   */
   @Prop() mock: boolean = false;
 
   @State() garden: Garden | null = null;
@@ -32,7 +35,10 @@ export class GardenerApp {
     }
   }
 
-  async reloadGarden() {
+  /**
+   * Reload the garden
+   */
+  private async reloadGarden() {
     try {
       this.garden = await this.gardenService.getGarden();
       forceUpdate(this);
@@ -42,7 +48,10 @@ export class GardenerApp {
     }
   }
 
-  async reloadPlants() {
+  /**
+   * Reload the plants
+   */
+  private async reloadPlants() {
     try {
       this.plants = await this.gardenService.getPlants();
       forceUpdate(this);
@@ -52,16 +61,20 @@ export class GardenerApp {
     }
   }
 
-  selectField(ev: CustomEvent<number>) {
+  /**
+   * Select a field
+   * @param ev Event containing the field index
+   */
+  private selectField(ev: CustomEvent<number>) {
     if (ev.detail === null) return;
     this.selectedField = ev.detail;
   }
 
-  getField(id: number): GardenField | null {
-    return this.garden.fields[id] ?? null;
-  }
-
-  async savePlant(plant: Plant) {
+  /**
+   * Save the plant
+   * @param plant The plant to save
+   */
+  private async savePlant(plant: Plant) {
     try {
       if (plant.id === '@new') {
         await this.gardenService.createPlant({
@@ -81,7 +94,11 @@ export class GardenerApp {
     }
   }
 
-  async saveField(field: GardenField) {
+  /**
+   * Save the field
+   * @param field The field to save
+   */
+  private async saveField(field: GardenField) {
     if (this.selectedField === -1) return;
     try {
       await this.gardenService.updateField(this.selectedField, {
@@ -96,7 +113,10 @@ export class GardenerApp {
     }
   }
 
-  async clearField() {
+  /**
+   * Clear the field
+   */
+  private async clearField() {
     if (this.selectedField === -1) return;
     try {
       await this.gardenService.clearField(this.selectedField);

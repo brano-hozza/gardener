@@ -1,5 +1,5 @@
 import { Garden, GardenField, Plant } from '../../types';
-import { CreatePlantRequestDTO, UpdateFieldRequestDTO, UpdateGardenRequestDTO, UpdatePlantRequestDTO } from '../../types/dtos';
+import { CreatePlantRequestDTO, UpdateFieldRequestDTO, UpdatePlantRequestDTO } from '../../types/dtos';
 import { IGardenService } from '../interfaces/garden.iservice';
 
 export class GardenServiceMock implements IGardenService {
@@ -45,11 +45,6 @@ export class GardenServiceMock implements IGardenService {
     return GardenServiceMock.plants;
   }
 
-  async updateGarden(dto: UpdateGardenRequestDTO): Promise<void> {
-    console.log('Updating garden:', dto);
-    if (dto.name) GardenServiceMock.garden.name = dto.name;
-    if (dto.size) GardenServiceMock.garden.size = dto.size;
-  }
 
   async updateField(idx: number, dto: UpdateFieldRequestDTO): Promise<void> {
     console.log('Updating field:', idx, dto);

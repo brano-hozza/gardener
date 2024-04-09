@@ -1,9 +1,3 @@
-
-export interface UpdateGardenRequestDTO {
-  name?: string;
-  size?: number;
-}
-
 export interface UpdateFieldRequestDTO {
   plant?: string;
   note?: string;

@@ -1,5 +1,5 @@
 import { Garden, Plant } from '../types';
-import { CreatePlantRequestDTO, UpdateFieldRequestDTO, UpdateGardenRequestDTO, UpdatePlantRequestDTO } from '../types/dtos';
+import { CreatePlantRequestDTO, UpdateFieldRequestDTO, UpdatePlantRequestDTO } from '../types/dtos';
 import { IGardenService } from './interfaces/garden.iservice';
 import { GardenServiceMock } from './mock/garden.mock.service';
 
@@ -22,18 +22,6 @@ class GardenService implements IGardenService {
     return response.json();
   }
 
-  async updateGarden(dto: UpdateGardenRequestDTO): Promise<void> {
-    const response = await fetch(`${this.apiBase}/garden`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dto),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-  }
 
   async updateField(idx: number, dto: UpdateFieldRequestDTO): Promise<void> {
     const response = await fetch(`${this.apiBase}/garden/field/${idx}`, {

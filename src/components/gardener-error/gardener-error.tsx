@@ -5,6 +5,9 @@ import { Component, Prop, h } from '@stencil/core';
   shadow: false,
 })
 export class GardenerError {
+  /**
+   * The error message to display
+   */
   @Prop() error: string;
 
   render() {

@@ -38,16 +38,20 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "tw:build": "npx tailwindcss -i ./src/directives.css -o ./www/tailwind.css",
-    "tw:watch": "npx tailwindcss -i ./src/directives.css -o ./www/tailwind.css --watch"
+    "tw:watch": "npx tailwindcss -i ./src/directives.css -o ./www/tailwind.css --watch",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts,.tsx"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
+    "@stencil-community/eslint-plugin": "^0.7.2",
     "@stencil/core": "^4.7.0",
     "@types/jest": "^29.5.6",
     "@types/node": "^16.18.11",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
