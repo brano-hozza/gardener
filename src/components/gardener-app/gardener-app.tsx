@@ -1,4 +1,4 @@
-import { Component, Prop, State, forceUpdate, h } from '@stencil/core';
+import { Component, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { StyledHost } from '../../helpers/styled-host';
 import { GardenServiceFactory } from '../../services/garden.service';
 import { Garden, GardenField, Plant } from '../../types';
@@ -15,6 +15,11 @@ export class GardenerApp {
   @State() selectedField: number = -1;
 
   private gardenService = GardenServiceFactory.create('http://localhost:3000', this.mock);
+
+  @Watch('mock')
+  async onMockChange() {
+    document.location.reload();
+  }
 
   async componentWillLoad() {
     this.garden = await this.gardenService.getGarden();
